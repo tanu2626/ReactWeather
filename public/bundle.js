@@ -25048,41 +25048,56 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      location: 'Miami',
-	      temp: 88
+	      isLoading: false
 	    };
 	  },
 	  handleSearch: function handleSearch(location) {
 	    var that = this;
 
+	    this.setState({ isLoading: true });
+
 	    openWeatherMap.getTemp(location).then(function (temp) {
 	      that.setState({
 	        location: location,
-	        temp: temp
+	        temp: temp,
+	        isLoading: false
 	      });
 	    }, function (errorMessage) {
+	      that.setState({ isLoading: false });
 	      alert(errorMessage);
 	    });
 	  },
-
 	  render: function render() {
 	    var _state = this.state,
+	        isLoading = _state.isLoading,
 	        temp = _state.temp,
 	        location = _state.location;
+
+
+	    function renderMessage() {
+	      if (isLoading) {
+	        return React.createElement(
+	          'h3',
+	          { className: 'text-center' },
+	          'Fetching weather...'
+	        );
+	      } else if (temp && location) {
+	        return React.createElement(WeatherMessage, { temp: temp, location: location });
+	      }
+	    }
 
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(
-	        'h3',
-	        null,
-	        ' Weather Component '
+	        'h1',
+	        { className: 'text-center' },
+	        'Get Weather'
 	      ),
 	      React.createElement(WeatherForm, { onSearch: this.handleSearch }),
-	      React.createElement(WeatherMessage, { temp: temp, location: location })
+	      renderMessage()
 	    );
 	  }
-
 	});
 
 	module.exports = Weather;
@@ -25118,8 +25133,8 @@
 	        React.createElement('input', { type: 'text', ref: 'location' }),
 	        React.createElement(
 	          'button',
-	          null,
-	          ' Get Weather'
+	          { className: 'button expanded hollow' },
+	          'Get Weather'
 	        )
 	      )
 	    );
@@ -25132,30 +25147,24 @@
 /* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(8);
 
-	var WeatherMessage = React.createClass({
-	  displayName: 'WeatherMessage',
+	var WeatherMessage = function WeatherMessage(_ref) {
+	  var temp = _ref.temp,
+	      location = _ref.location;
 
-	  render: function render() {
-	    var _props = this.props,
-	        temp = _props.temp,
-	        location = _props.location;
-
-	    return React.createElement(
-	      'h3',
-	      null,
-	      ' It\'s it ',
-	      temp,
-	      ' in ',
-	      location,
-	      '. '
-	    );
-	  }
-
-	});
+	  return React.createElement(
+	    "h3",
+	    { className: "text-center" },
+	    "It's it ",
+	    temp,
+	    " in ",
+	    location,
+	    "."
+	  );
+	};
 
 	module.exports = WeatherMessage;
 
