@@ -24922,23 +24922,22 @@
 	var React = __webpack_require__(8);
 	var Nav = __webpack_require__(224);
 
-	var Main = React.createClass({
-	  displayName: 'Main',
-
-	  render: function render() {
-	    return React.createElement(
+	var Main = function Main(props) {
+	  return React.createElement(
+	    'div',
+	    null,
+	    React.createElement(Nav, null),
+	    React.createElement(
 	      'div',
-	      null,
-	      React.createElement(Nav, null),
+	      { className: 'row' },
 	      React.createElement(
-	        'h2',
-	        null,
-	        ' Main Component '
-	      ),
-	      this.props.children
-	    );
-	  }
-	});
+	        'div',
+	        { className: 'columns medium-6 large-4 small-centered' },
+	        props.children
+	      )
+	    )
+	  );
+	};
 
 	module.exports = Main;
 
@@ -24954,35 +24953,78 @@
 	    Link = _require.Link,
 	    IndexLink = _require.IndexLink;
 
-	//New Link Component is being introduced
-	//Link can able to accesss and make links
-
 	var Nav = React.createClass({
 	  displayName: 'Nav',
 
+	  onSearch: function onSearch(e) {
+	    e.preventDefault();
+	    alert('Not yet wired up!');
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'top-bar' },
 	      React.createElement(
-	        'h2',
-	        null,
-	        ' Nav Component '
+	        'div',
+	        { className: 'top-bar-left' },
+	        React.createElement(
+	          'ul',
+	          { className: 'menu' },
+	          React.createElement(
+	            'li',
+	            { className: 'menu-text' },
+	            'React Weather App'
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              IndexLink,
+	              { to: '/', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Get Weather'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/about', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'About'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/examples', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Examples'
+	            )
+	          )
+	        )
 	      ),
 	      React.createElement(
-	        IndexLink,
-	        { to: '/', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	        ' Get Weather '
-	      ),
-	      React.createElement(
-	        Link,
-	        { to: '/about', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	        ' About '
-	      ),
-	      React.createElement(
-	        Link,
-	        { to: '/examples', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	        ' Examples '
+	        'div',
+	        { className: 'top-bar-right' },
+	        React.createElement(
+	          'form',
+	          { onSubmit: this.onSearch },
+	          React.createElement(
+	            'ul',
+	            { className: 'menu' },
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement('input', { type: 'search', placeholder: 'Search weather' })
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement('input', { type: 'submit', className: 'button', value: 'Get Weather' })
+	            )
+	          )
+	        )
 	      )
 	    );
 	  }
@@ -26674,27 +26716,47 @@
 
 	var React = __webpack_require__(8);
 
-	var Examples = React.createClass({
-	  displayName: 'Examples',
+	var _require = __webpack_require__(166),
+	    Link = _require.Link;
 
-	  render: function render() {
-	    return React.createElement(
-	      'div',
+	var Examples = function Examples(props) {
+	  return React.createElement(
+	    'div',
+	    null,
+	    React.createElement(
+	      'h1',
+	      { className: 'text-center' },
+	      'Examples'
+	    ),
+	    React.createElement(
+	      'p',
+	      null,
+	      'Here are a few example locations to try out:'
+	    ),
+	    React.createElement(
+	      'ol',
 	      null,
 	      React.createElement(
-	        'h3',
+	        'li',
 	        null,
-	        ' Examples'
+	        React.createElement(
+	          Link,
+	          { to: '/?location=Philadelphia' },
+	          'Philadelphia, PA'
+	        )
 	      ),
 	      React.createElement(
-	        'p',
+	        'li',
 	        null,
-	        ' Welcome to examples page '
+	        React.createElement(
+	          Link,
+	          { to: '/?location=Rio' },
+	          'Rio, Brazil'
+	        )
 	      )
-	    );
-	  }
-
-	});
+	    )
+	  );
+	};
 
 	module.exports = Examples;
 
